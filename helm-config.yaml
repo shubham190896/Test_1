@@ -1,0 +1,46 @@
+# This file contains the essential configs for the ingress controller helm chart
+
+# Verbosity level of the App Gateway Ingress Controller
+verbosityLevel: 3
+
+################################################################################
+# Specify which application gateway the ingress controller will manage
+#
+appgw:
+    subscriptionId: a4ff4dc4-33ae-49d6-ad49-3067987a0784
+    resourceGroup: rg-kb_network-uat-001
+    name: agw-kb-uat-n_eu-01
+
+    # Setting appgw.shared to "true" will create an AzureIngressProhibitedTarget CRD.
+    # This prohibits AGIC from applying config for any host/path.
+    # Use "kubectl get AzureIngressProhibitedTargets" to view and change this.
+    shared: true
+
+################################################################################
+# Specify which kubernetes namespace the ingress controller will watch
+# Default value is "default"
+# Leaving this variable out or setting it to blank or empty string would
+# result in Ingress Controller observing all acessible namespaces.
+#
+# kubernetes:
+#   watchNamespace: <namespace>
+
+################################################################################
+# Specify the authentication with Azure Resource Manager
+#
+# Two authentication methods are available:
+# - Option 1: AAD-Pod-Identity (https://github.com/Azure/aad-pod-identity)
+armAuth:
+    type: workloadIdentity
+    identityResourceID: /subscriptions/a4ff4dc4-33ae-49d6-ad49-3067987a0784/resourcegroups/MC_rg-knowledge_bank-uat-001_akssubmissionuat01_northeurope/providers/Microsoft.ManagedIdentity/userAssignedIdentities/akssubmissionuat01-agentpool
+    identityClientID:  c83d05fb-19b0-492c-880f-c3b2037ed3a2
+
+## Alternatively you can use Service Principal credentials
+# armAuth:
+#    type: servicePrincipal
+#    secretJSON: <<Generate this value with: "az ad sp create-for-rbac --subscription <subscription-uuid> --sdk-auth | base64 -w0" >>
+
+################################################################################
+# Specify if the cluster is RBAC enabled or not
+rbac:
+    enabled: true # true/false

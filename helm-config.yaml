@@ -7,9 +7,9 @@ verbosityLevel: 3
 # Specify which application gateway the ingress controller will manage
 #
 appgw:
-    subscriptionId: a4ff4dc4-33ae-49d6-ad49-3067987a0784
-    resourceGroup: rg-kb_network-uat-001
-    name: agw-kb-uat-n_eu-01
+    subscriptionId: f76e483c-5606-455d-a368-c68f69d317e3
+    resourceGroup: rg-k8s-sandbox-001
+    name: testappgw
 
     # Setting appgw.shared to "true" will create an AzureIngressProhibitedTarget CRD.
     # This prohibits AGIC from applying config for any host/path.
@@ -32,8 +32,8 @@ appgw:
 # - Option 1: AAD-Pod-Identity (https://github.com/Azure/aad-pod-identity)
 armAuth:
     type: workloadIdentity
-    identityResourceID: /subscriptions/a4ff4dc4-33ae-49d6-ad49-3067987a0784/resourcegroups/MC_rg-knowledge_bank-uat-001_akssubmissionuat01_northeurope/providers/Microsoft.ManagedIdentity/userAssignedIdentities/akssubmissionuat01-agentpool
-    identityClientID:  c83d05fb-19b0-492c-880f-c3b2037ed3a2
+    identityResourceID: /subscriptions/f76e483c-5606-455d-a368-c68f69d317e3/resourcegroups/MC_rg-k8s-sandbox-001_testaks_northeurope/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testaks-agentpool
+    identityClientID:  2bae7328-52de-4100-ab2c-d2dbac5badd6
 
 ## Alternatively you can use Service Principal credentials
 # armAuth:
